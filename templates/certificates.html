@@ -1,0 +1,391 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container my-4">
+    <h1 class="text-center mb-4">My Certificates</h1>
+    
+    <div class="certificate-container">
+        <!-- Certificate Type Selector -->
+        <div class="certificate-tabs mb-4">
+            <button class="cert-tab-btn active" data-target="courses">
+                <i class="fas fa-book-open me-2"></i>Course Completion
+            </button>
+            <button class="cert-tab-btn" data-target="hackathons">
+                <i class="fas fa-trophy me-2"></i>Hackathons & Participation
+            </button>
+        </div>
+
+        <!-- Certificates Content -->
+        <div class="cert-content-container">
+            <!-- Course Certificates -->
+            <div id="courses" class="cert-content active">
+                <div class="cert-grid">
+                    {% for cert in course_certificates %}
+                    <div class="cert-card" data-aos="fade-up">
+                        <div class="cert-img-container">
+                            <img src="{{ cert.image }}" alt="{{ cert.title }}" class="cert-img" 
+                                 data-full-img="{{ cert.full_image }}" 
+                                 data-cert-title="{{ cert.title }}"
+                                 data-cert-issuer="{{ cert.issuer }}"
+                                 data-cert-date="{{ cert.date }}">
+                            <div class="cert-overlay">
+                                <button class="view-cert-btn">View Certificate</button>
+                            </div>
+                        </div>
+                        <div class="cert-info">
+                            <h3>{{ cert.title }}</h3>
+                            <p class="cert-issuer">{{ cert.issuer }}</p>
+                            <p class="cert-date">{{ cert.date }}</p>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    
+                    <!-- Example static entry for demonstration -->
+                    <!-- <div class="cert-card" data-aos="fade-up">
+                        <div class="cert-img-container">
+                            <img src="{{ url_for('static', filename='img/certificates/python-cert.jpg') }}" alt="Python Programming" class="cert-img"
+                                 data-full-img="{{ url_for('static', filename='img/certificates/python-cert.jpg') }}"
+                                 data-cert-title="Python Programming"
+                                 data-cert-issuer="Coursera"
+                                 data-cert-date="January 2023">
+                            <div class="cert-overlay">
+                                <button class="view-cert-btn">View Certificate</button>
+                            </div>
+                        </div>
+                        <div class="cert-info">
+                            <h3>Advanced Python: Classes and
+                                Functions</h3>
+                            <p class="cert-issuer">LinkedIn</p>
+                            <p class="cert-date">21 November 2024</p>
+                        </div>
+                    </div>-->
+                </div>
+            </div> 
+            
+            <!-- Hackathon Certificates -->
+            <div id="hackathons" class="cert-content">
+                <div class="cert-grid">
+                    {% for cert in hackathon_certificates %}
+                    <div class="cert-card" data-aos="fade-up">
+                        <div class="cert-img-container">
+                            <img src="{{ cert.image }}" alt="{{ cert.title }}" class="cert-img"
+                                 data-full-img="{{ cert.full_image }}"
+                                 data-cert-title="{{ cert.title }}"
+                                 data-cert-issuer="{{ cert.issuer }}"
+                                 data-cert-date="{{ cert.date }}">
+                            <div class="cert-overlay">
+                                <button class="view-cert-btn">View Certificate</button>
+                            </div>
+                        </div>
+                        <div class="cert-info">
+                            <h3>{{ cert.title }}</h3>
+                            <p class="cert-issuer">{{ cert.issuer }}</p>
+                            <p class="cert-date">{{ cert.date }}</p>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    
+                    <!-- Example static entry for demonstration -->
+                    <!-- <div class="cert-card" data-aos="fade-up">
+                        <div class="cert-img-container">
+                            <img src="{{ url_for('static', filename='img/certificates/hackathon-cert.jpg') }}" alt="AI Hackathon" class="cert-img"
+                                 data-full-img="{{ url_for('static', filename='img/certificates/hackathon-cert.jpg') }}"
+                                 data-cert-title="AI Hackathon Winner"
+                                 data-cert-issuer="TechFest 2023"
+                                 data-cert-date="March 2023">
+                            <div class="cert-overlay">
+                                <button class="view-cert-btn">View Certificate</button>
+                            </div>
+                        </div>
+                        <div class="cert-info">
+                            <h3>AI Hackathon Winner</h3>
+                            <p class="cert-issuer">TechFest 2023</p>
+                            <p class="cert-date">March 2023</p>
+                        </div>
+                    </div> -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Certificate Modal -->
+<div class="modal fade" id="certificateModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="certModalTitle"></h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-0">
+                <div class="row g-0">
+                    <div class="col-md-9">
+                        <div class="cert-modal-img-container">
+                            <img id="certModalImg" src="" class="img-fluid" alt="Certificate">
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="cert-modal-info p-4">
+                            <h5 id="certModalName"></h5>
+                            <div class="cert-modal-meta">
+                                <p><strong>Issuer:</strong> <span id="certModalIssuer"></span></p>
+                                <p><strong>Date:</strong> <span id="certModalDate"></span></p>
+                            </div>
+                            <div class="cert-modal-actions mt-4">
+                                <a href="#" class="btn btn-primary w-100 mb-2" id="downloadCertBtn">
+                                    <i class="fas fa-download me-2"></i>Download
+                                </a>
+                                <a href="#" class="btn btn-outline-primary w-100" id="shareCertBtn">
+                                    <i class="fas fa-share-alt me-2"></i>Share
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+/* Certificate Tabs */
+.certificate-tabs {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.cert-tab-btn {
+    background: #f5f5f5;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 50px;
+    color: #555;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    font-size: 0.95rem;
+}
+
+.cert-tab-btn.active {
+    background: #4e73df;
+    color: white;
+    box-shadow: 0 4px 15px rgba(78, 115, 223, 0.3);
+}
+
+.cert-tab-btn:hover:not(.active) {
+    background: #e9ecef;
+    transform: translateY(-2px);
+}
+
+/* Certificate Content */
+.cert-content-container {
+    position: relative;
+    min-height: 400px;
+}
+
+.cert-content {
+    display: none;
+    animation: fadeIn 0.5s ease;
+}
+
+.cert-content.active {
+    display: block;
+}
+
+/* Certificate Grid */
+.cert-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+/* Certificate Card */
+.cert-card {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.cert-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 20px rgba(0,0,0,0.1);
+}
+
+.cert-img-container {
+    position: relative;
+    height: 200px;
+    overflow: hidden;
+}
+
+.cert-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.cert-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.cert-img-container:hover .cert-overlay {
+    opacity: 1;
+}
+
+.cert-img-container:hover .cert-img {
+    transform: scale(1.05);
+}
+
+.view-cert-btn {
+    background: white;
+    color: #333;
+    border: none;
+    padding: 0.6rem 1.2rem;
+    border-radius: 50px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    transform: translateY(20px);
+    opacity: 0;
+}
+
+.cert-img-container:hover .view-cert-btn {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+.view-cert-btn:hover {
+    background: #4e73df;
+    color: white;
+}
+
+.cert-info {
+    padding: 1.5rem;
+}
+
+.cert-info h3 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: #333;
+}
+
+.cert-issuer {
+    color: #666;
+    margin-bottom: 0.3rem;
+    font-size: 0.9rem;
+}
+
+.cert-date {
+    color: #999;
+    font-size: 0.85rem;
+}
+
+/* Modal Styles */
+.cert-modal-img-container {
+    background: #f8f9fa;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+}
+
+.cert-modal-info {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.cert-modal-meta {
+    margin-top: 1rem;
+    color: #666;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Tab switching functionality
+    const tabButtons = document.querySelectorAll('.cert-tab-btn');
+    const tabContents = document.querySelectorAll('.cert-content');
+    
+    tabButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            // Remove active class from all buttons and contents
+            tabButtons.forEach(btn => btn.classList.remove('active'));
+            tabContents.forEach(content => content.classList.remove('active'));
+            
+            // Add active class to clicked button
+            this.classList.add('active');
+            
+            // Show corresponding content
+            const targetId = this.getAttribute('data-target');
+            document.getElementById(targetId).classList.add('active');
+        });
+    });
+    
+    // Certificate modal functionality
+    const certCards = document.querySelectorAll('.cert-img-container');
+    const certModal = new bootstrap.Modal(document.getElementById('certificateModal'));
+    
+    certCards.forEach(card => {
+        const viewBtn = card.querySelector('.view-cert-btn');
+        const certImg = card.querySelector('.cert-img');
+        
+        viewBtn.addEventListener('click', function() {
+            // Get certificate data
+            const fullImg = certImg.getAttribute('data-full-img');
+            const title = certImg.getAttribute('data-cert-title');
+            const issuer = certImg.getAttribute('data-cert-issuer');
+            const date = certImg.getAttribute('data-cert-date');
+            
+            // Populate modal
+            document.getElementById('certModalImg').src = fullImg;
+            document.getElementById('certModalTitle').textContent = title;
+            document.getElementById('certModalName').textContent = title;
+            document.getElementById('certModalIssuer').textContent = issuer;
+            document.getElementById('certModalDate').textContent = date;
+            
+            // Show modal
+            certModal.show();
+        });
+    });
+    
+    // Download button functionality (example)
+    document.getElementById('downloadCertBtn').addEventListener('click', function(e) {
+        e.preventDefault();
+        const imgSrc = document.getElementById('certModalImg').src;
+        const link = document.createElement('a');
+        link.href = imgSrc;
+        link.download = 'certificate.jpg';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    });
+    
+    // Share button functionality (example - could be expanded)
+    document.getElementById('shareCertBtn').addEventListener('click', function(e) {
+        e.preventDefault();
+        alert('Share functionality would be implemented here');
+    });
+});
+</script>
+{% endblock %}

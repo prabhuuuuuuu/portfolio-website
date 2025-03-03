@@ -1,0 +1,131 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container my-4">
+    <h1 class="text-center mb-4">Get In Touch</h1>
+    
+    <div class="row g-4">
+        <!-- Contact Form -->
+        <div class="col-lg-7">
+            <div class="card shadow-sm border-0">
+                <div class="card-body p-4">
+                    <h3 class="card-title mb-3">Send Me a Message</h3>
+                    <form id="contactForm">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" id="name" placeholder="Your Name">
+                                    <label for="name">Full Name</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-floating mb-3">
+                                    <input type="email" class="form-control" id="email" placeholder="Your Email">
+                                    <label for="email">Email Address</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="subject" placeholder="Subject">
+                            <label for="subject">Subject</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <textarea class="form-control" id="message" style="height: 150px" placeholder="Your Message"></textarea>
+                            <label for="message">Your Message</label>
+                        </div>
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary py-3">
+                                <i class="fas fa-paper-plane me-2"></i>Send Message
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Contact Information -->
+        <div class="col-lg-5">
+            <div class="card shadow-sm border-0 h-100">
+                <div class="card-body p-4">
+                    <h3 class="card-title mb-4">Contact Information</h3>
+                    
+                    <div class="d-flex mb-4">
+                        <div class="contact-icon bg-primary text-white rounded-circle me-3">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div>
+                            <h5 class="mb-1">Location</h5>
+                            <p class="text-muted mb-0">VIT Chennai, India</p>
+                        </div>
+                    </div>
+                    
+                    <div class="d-flex mb-4">
+                        <div class="contact-icon bg-primary text-white rounded-circle me-3">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div>
+                            <h5 class="mb-1">Email</h5>
+                            <p class="text-muted mb-0">pranavprashantshewale@gmail.com</p>
+                        </div>
+                    </div>
+                    
+                    <div class="d-flex mb-4">
+                        <div class="contact-icon bg-primary text-white rounded-circle me-3">
+                            <i class="fas fa-phone"></i>
+                        </div>
+                        <div>
+                            <h5 class="mb-1">Phone</h5>
+                            <p class="text-muted mb-0">+91 8087972894</p>
+                        </div>
+                    </div>
+                    
+                    <h5 class="mt-4 mb-3">Connect With Me</h5>
+                    <div class="d-flex social-links">
+                        <a href="https://www.linkedin.com/in/pranav-shewale/" class="me-2 social-icon" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="https://github.com/prabhuuuuuuu" class="me-2 social-icon" target="_blank"><i class="fab fa-github"></i></a>
+                        <a href="https://x.com/pra_bhuu" class="me-2 social-icon" target="_blank"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .contact-icon {
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .social-icon {
+        width: 36px;
+        height: 36px;
+        background-color: #f8f9fa;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #495057;
+        text-decoration: none;
+        transition: all 0.3s ease;
+    }
+    
+    .social-icon:hover {
+        background-color: #0d6efd;
+        color: white;
+        transform: translateY(-3px);
+    }
+    
+    .card {
+        border-radius: 10px;
+        transition: transform 0.3s ease;
+    }
+    
+    .card:hover {
+        transform: translateY(-5px);
+    }
+</style>
+{% endblock %}

@@ -1,0 +1,129 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container my-4">
+    <h1 class="text-center mb-4">My Projects</h1>
+
+    <div class="project-tabs mb-4">
+        <button class="proj-tab-btn active" data-target="all-projects">All Projects</button>
+        <button class="proj-tab-btn" data-target="learning-projects">Learning Projects</button>
+        <button class="proj-tab-btn" data-target="hackathon-projects">Hackathon Projects</button>
+        <button class="proj-tab-btn" data-target="innovative-projects">Innovative Projects</button>
+    </div>
+
+    <div class="project-content-container">
+        <div id="all-projects" class="proj-content active">
+            <div class="proj-grid">
+                {% for project in learning_projects + hackathon_projects + innovative_projects %}
+                <div class="proj-card">
+                    <h3>{{ project.title }}</h3>
+                    <p>{{ project.description }}</p>
+                    <a href="{{ project.github_link }}" class="btn btn-primary" target="_blank">View GitHub Repo</a>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div id="learning-projects" class="proj-content">
+            <div class="proj-grid">
+                {% for project in learning_projects %}
+                <div class="proj-card">
+                    <h3>{{ project.title }}</h3>
+                    <p>{{ project.description }}</p>
+                    <a href="{{ project.github_link }}" class="btn btn-primary" target="_blank">View GitHub Repo</a>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div id="hackathon-projects" class="proj-content">
+            <div class="proj-grid">
+                {% for project in hackathon_projects %}
+                <div class="proj-card">
+                    <h3>{{ project.title }}</h3>
+                    <p>{{ project.description }}</p>
+                    <a href="{{ project.github_link }}" class="btn btn-primary" target="_blank">View GitHub Repo</a>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div id="innovative-projects" class="proj-content">
+            <div class="proj-grid">
+                {% for project in innovative_projects %}
+                <div class="proj-card">
+                    <h3>{{ project.title }}</h3>
+                    <p>{{ project.description }}</p>
+                    <a href="{{ project.github_link }}" class="btn btn-primary" target="_blank">View GitHub Repo</a>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.project-tabs {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.proj-tab-btn {
+    background: #f5f5f5;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 50px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.proj-tab-btn.active {
+    background: #4e73df;
+    color: white;
+}
+
+.project-content-container {
+    min-height: 400px;
+}
+
+.proj-content {
+    display: none;
+}
+
+.proj-content.active {
+    display: block;
+}
+
+.proj-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+.proj-card {
+    background: white;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const tabButtons = document.querySelectorAll('.proj-tab-btn');
+    const tabContents = document.querySelectorAll('.proj-content');
+
+    tabButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            tabButtons.forEach(btn => btn.classList.remove('active'));
+            tabContents.forEach(content => content.classList.remove('active'));
+            
+            this.classList.add('active');
+            document.getElementById(this.dataset.target).classList.add('active');
+        });
+    });
+});
+</script>
+{% endblock %}
