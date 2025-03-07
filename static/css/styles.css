@@ -39,6 +39,12 @@ h1, h2, h3, h4, h5, h6 {
     color: #d0d0d0;
 }
 
+header img {
+    height: 60px;
+    margin: 10px;
+  }
+  
+
 /* Main content area */
 main {
     flex: 1 0 auto;
