@@ -1,10 +1,10 @@
-from flask import Flask, render_template, url_for # type: ignore
+from flask import Flask, render_template, url_for, Request # type: ignore
 
 app = Flask(__name__)
 app.config['TEMPLATES_AUTO_RELOAD'] = True
 
 @app.route("/")
-def home():
+def index():
     return render_template("index.html")
 
 @app.route("/projects")
@@ -135,3 +135,7 @@ def contact():
 
 if __name__ == "__main__":
     app.run(debug=True)
+
+
+def handler(request: Request):
+    return app(request)
