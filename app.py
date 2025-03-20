@@ -1,5 +1,4 @@
-from flask import Flask, render_template, url_for, Request # type: ignore  
-from http.server import BaseHTTPRequestHandler
+from flask import Flask, render_template, url_for
 
 app = Flask(__name__)
 app.config['TEMPLATES_AUTO_RELOAD'] = True
@@ -69,17 +68,10 @@ def certificates():
 def contact():
     return render_template("contact.html")
 
+# This is the proper handler for Vercel
+def handler(event, context):
+    return app(event['body'], event['headers'])
+
+# For local development
 if __name__ == "__main__":
     app.run(debug=True)
-
-# HTTP Server handler
-class handler(BaseHTTPRequestHandler):
-    def do_GET(self):
-        self.send_response(200)
-        self.send_header('Content-type', 'text/plain')
-        self.end_headers()
-        self.wfile.write('Hello, world!'.encode())
-        return
-
-def handler(request: Request):
-    return app(request)
