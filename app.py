@@ -68,8 +68,9 @@ def certificates():
 def contact():
     return render_template("contact.html")
 
+# Vercel-specific serverless function handler
 def handler(event, context):
-    return app(event['body'], event['headers'])
+    return app(event, context)
 
 if __name__ == "__main__":
     app.run(debug=True)
